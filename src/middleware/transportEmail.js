@@ -37,7 +37,7 @@ ${message}`,
       res.status(500).json({ message: "Erreur lors de l'envoi de l'email." });
     }
   } catch (error) {
-    next(error);
+    res.json({ error: error, message: "transport" });
   }
 };
 

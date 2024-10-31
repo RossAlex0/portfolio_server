@@ -6,7 +6,7 @@ const send = async (req, res, next) => {
       message: `Merci ${name}, votre email concernant "${subject}" a bien été envoyé.\n Je vous recontact au plus vite. 🚀`,
     });
   } catch (error) {
-    next(error);
+    res.json({ error: error, message: "control" });
   }
 };
 
