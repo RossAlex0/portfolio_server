@@ -5,7 +5,7 @@ const { EMAIL_USER, EMAIL_PASSWORD } = process.env;
 const createEmail = async (req, res, next) => {
   try {
     const { name, email, subject, message } = req.body;
-    console.info("create", req.body);
+
     const transporter = nodemailer.createTransport({
       service: "Gmail",
       auth: {
@@ -37,7 +37,7 @@ ${message}`,
       res.status(500).json({ message: "Erreur lors de l'envoi de l'email." });
     }
   } catch (error) {
-    res.json({ error: error, message: "transport" });
+    next(error);
   }
 };
 
