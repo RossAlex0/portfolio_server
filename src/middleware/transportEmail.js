@@ -5,7 +5,7 @@ const { EMAIL_USER, EMAIL_PASSWORD } = process.env;
 const createEmail = async (req, res, next) => {
   try {
     const { name, email, subject, message } = req.body;
-
+    console.info("create", req.body);
     const transporter = nodemailer.createTransport({
       service: "Gmail",
       auth: {

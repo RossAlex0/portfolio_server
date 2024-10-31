@@ -2,7 +2,7 @@ const Joi = require("joi");
 
 const verifyEmailRequest = async (req, res, next) => {
   const userEmail = req.body;
-
+  console.info("verif", userEmail);
   const schema = Joi.object({
     name: Joi.string().required(),
     email: Joi.string().min(6).email().required(),
