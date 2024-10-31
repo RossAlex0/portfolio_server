@@ -20,4 +20,10 @@ router.post(
   send
 );
 
+router.post("/test", (req, res) => {
+  const test = req.body.test;
+
+  res.json({ message: test });
+});
+
 module.exports = router;
