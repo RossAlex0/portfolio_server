@@ -10,6 +10,14 @@ router.get("/", (req, res) => {
   res.json({ message: "Hello from my portfolio API!" });
 });
 
-router.post("/send-email", verifyEmailRequest, createEmail, send);
+router.post(
+  "/send-email",
+  () => {
+    console.info("rout");
+  },
+  verifyEmailRequest,
+  createEmail,
+  send
+);
 
 module.exports = router;
