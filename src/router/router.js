@@ -15,7 +15,6 @@ router.post(
   () => {
     console.info("rout");
   },
-  verifyEmailRequest,
   createEmail,
   send
 );
