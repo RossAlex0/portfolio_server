@@ -10,14 +10,7 @@ router.get("/", (req, res) => {
   res.json({ message: "Hello from my portfolio API!" });
 });
 
-router.post(
-  "/send-email",
-  () => {
-    console.info("rout");
-  },
-  createEmail,
-  send
-);
+router.post("/send-email", createEmail, send);
 
 router.post("/test", (req, res) => {
   const test = req.body.test;
