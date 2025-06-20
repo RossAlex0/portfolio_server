@@ -12,6 +12,8 @@ app.use(
   })
 );
 
+app.options("*", cors());
+
 app.use("/api", router);
 
 export default app;
