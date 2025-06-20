@@ -1,10 +1,11 @@
 import { Request, Response, NextFunction } from "express";
 import nodemailer from "nodemailer";
+import { EmailInfo } from "../types";
 
 export const buildAndSendEmail = async (req: Request, res: Response) => {
   const { EMAIL_USER, EMAIL_PASSWORD } = process.env;
 
-  const { name, email, subject, message } = req.body;
+  const { name, email, subject, message } = req.body as EmailInfo;
 
   const transporter = nodemailer.createTransport({
     service: "Gmail",

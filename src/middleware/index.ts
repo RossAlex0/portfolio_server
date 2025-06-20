@@ -23,7 +23,7 @@ export const verifyEmail = async (
     .catch((error) =>
       res.status(400).json({
         message: `Votre saisie est invalide, veuillez réessayer.`,
-        msgError: error,
+        error,
       })
     );
 };
