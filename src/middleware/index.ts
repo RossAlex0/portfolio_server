@@ -22,7 +22,7 @@ export const verifyEmail = async (
     .then(() => next())
     .catch((error) =>
       res.status(400).json({
-        message: `Votre saisie est invalide, veuillez réessayer.`,
+        errorMessage: `Votre saisie est invalide, veuillez réessayer.`,
         error,
       })
     );
@@ -42,7 +42,9 @@ export const verifyToken = (
   const token = req.headers["x-api-key"];
 
   if (!token) {
-    res.status(401).json({ message: "Clé manquante, requête non autorisée." });
+    res
+      .status(401)
+      .json({ errorMessage: "Clé manquante, requête non autorisée." });
     return;
   }
 
@@ -50,7 +52,9 @@ export const verifyToken = (
     token === process.env.TOKEN_SW1 || token === process.env.TOKEN_SW2;
 
   if (!isValidToken) {
-    res.status(401).json({ message: "Clé refusé, requête non autorisée." });
+    res
+      .status(401)
+      .json({ errorMessage: "Clé refusé, requête non autorisée." });
     return;
   }
 

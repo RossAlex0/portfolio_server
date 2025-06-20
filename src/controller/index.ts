@@ -37,9 +37,5 @@ ${message}`,
         message: `Merci ${name}, votre email concernant "${subject}" a bien été envoyé.\n Je vous recontacte au plus vite. 🚀`,
       })
     )
-    .catch((error) =>
-      res
-        .status(500)
-        .json({ message: "Erreur lors de l'envoi de l'email.", error })
-    );
+    .catch((error) => res.status(500).json(error));
 };
