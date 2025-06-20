@@ -19,7 +19,7 @@ export const verifyEmail = async (
 
   await schema
     .validateAsync(userEmail, { abortEarly: false })
-    .then(next)
+    .then(() => next())
     .catch((error) =>
       res.status(400).json({
         message: `Votre saisie est invalide, veuillez réessayer.`,

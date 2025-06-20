@@ -1,4 +1,4 @@
-import { Request, Response, NextFunction } from "express";
+import { Request, Response } from "express";
 import nodemailer from "nodemailer";
 import { EmailInfo } from "../types";
 
