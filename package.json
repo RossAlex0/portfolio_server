@@ -4,7 +4,7 @@
   "description": "Portfolio server",
   "main": "dist/index.js",
   "scripts": {
-    "start": "node index.js",
+    "start": "node dist/index.js",
     "build": "tsc"
   },
   "author": "Rossignol Alex",
