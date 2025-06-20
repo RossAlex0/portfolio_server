@@ -4,6 +4,10 @@ import { buildAndSendEmail } from "../controller";
 
 const router = express.Router();
 
+router.get("/test", (_req: Request, res: Response) => {
+  res.json({ message: "Ca marche" });
+});
+
 router.post(
   "/new-send-email",
   emailLimiter,
