@@ -2,7 +2,7 @@
   "name": "postofoli-server",
   "version": "1.0.0",
   "description": "Portfolio server",
-  "main": "index.js",
+  "main": "dist/index.js",
   "scripts": {
     "start": "node index.js",
     "build": "tsc"
