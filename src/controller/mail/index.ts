@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import nodemailer from "nodemailer";
-import { EmailInfo } from "../types";
+import { EmailInfo } from "../../types";
 
 export const buildAndSendEmail = async (req: Request, res: Response) => {
   const { EMAIL_USER, EMAIL_PASSWORD } = process.env;
