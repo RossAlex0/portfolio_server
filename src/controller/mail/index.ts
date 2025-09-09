@@ -1,24 +1,40 @@
 import { Request, Response } from "express";
 import nodemailer from "nodemailer";
-import { EmailInfo } from "../../types";
+import { EmailInfo, Origin } from "../../types";
 
 export const buildAndSendEmail = async (req: Request, res: Response) => {
-  const { EMAIL_USER, EMAIL_PASSWORD } = process.env;
+  const {
+    EMAIL_USER,
+    EMAIL_PASSWORD,
+    EMAIL_USER_CLIENT,
+    EMAIL_PASSWORD_CLIENT,
+  } = process.env;
 
   const { name, email, subject, message } = req.body as EmailInfo;
+
+  const _subject =
+    (req as any).origin === Origin.SW2
+      ? "Site web - Cercle des vignerons"
+      : `From portfolio - Nouveau message de ${name} : ${email}`;
+
+  const user =
+    (req as any).origin === Origin.SW2 ? EMAIL_USER_CLIENT : EMAIL_USER;
+
+  const pass =
+    (req as any).origin === Origin.SW2 ? EMAIL_PASSWORD_CLIENT : EMAIL_PASSWORD;
 
   const transporter = nodemailer.createTransport({
     service: "Gmail",
     auth: {
-      user: EMAIL_USER,
-      pass: EMAIL_PASSWORD,
+      user,
+      pass,
     },
   });
 
   const mailOptions = {
-    from: EMAIL_USER,
-    to: EMAIL_USER,
-    subject: `From portfolio - Nouveau message de ${name} : ${email}`,
+    from: `WebSite <${user}>`,
+    to: user,
+    subject: _subject,
     text: `           
        Nom: ${name}    ||    Email: ${email}
 
@@ -30,7 +46,7 @@ export const buildAndSendEmail = async (req: Request, res: Response) => {
 ${message}`,
   };
 
-  await transporter
+  transporter
     .sendMail(mailOptions)
     .then(() =>
       res.status(200).json({

@@ -4,3 +4,8 @@ export type EmailInfo = {
   subject: string;
   message: string;
 };
+
+export enum Origin {
+  SW1 = "sw1",
+  SW2 = "sw2",
+}

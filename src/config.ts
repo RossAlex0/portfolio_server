@@ -8,7 +8,12 @@ app.use(express.json());
 
 app.use(
   cors({
-    origin: "*",
+    origin: [
+      "https://www.cerclevignerons.com",
+      "https://www.alex-rossignol.fr",
+      "http://localhost:3000",
+    ],
+    credentials: true,
   })
 );
 
