@@ -1,7 +1,8 @@
 import Joi from "joi";
 import { Request, Response, NextFunction } from "express";
-import { EmailInfo, Origin } from "../types";
+import { Origin } from "../types";
 import rateLimit from "express-rate-limit";
+import sanitizeHtml from "sanitize-html";
 
 const schema = Joi.object({
   name: Joi.string().required(),
@@ -20,7 +21,7 @@ export const verifyEmail = (
     .then(() => next())
     .catch((error) =>
       res.status(400).json({
-        errorMessage: `Votre saisie est invalide, veuillez réessayer.`,
+        errorMessage: "Invalid input. Please correct the errors and try again.",
         error,
       })
     );
@@ -29,11 +30,11 @@ export const verifyEmail = (
 export const emailLimiter = rateLimit({
   windowMs: 1 * 60 * 1000,
   max: 35,
-  message: "Trop de tentatives, réessayez plus tard.",
+  message: "Too many attempts, please try again later.",
 });
 
 export const verifyToken = (
-  req: Request,
+  req: Request & { origin?: string },
   res: Response,
   next: NextFunction
 ) => {
@@ -52,8 +53,31 @@ export const verifyToken = (
     return;
   }
 
-  (req as any).origin =
-    token === process.env.TOKEN_SW1 ? Origin.SW1 : Origin.SW2;
+  req.origin = token === process.env.TOKEN_SW1 ? Origin.SW1 : Origin.SW2;
+
+  next();
+};
+
+export const sanitizeBody = (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  if (!req.body || !(typeof req.body === "object")) {
+    res.status(400).json({
+      errorMessage: "Request body must be a valid JSON object.",
+    });
+    return;
+  }
+
+  const bodyKeys = Object.keys(req.body);
+
+  for (const key of bodyKeys) {
+    req.body[key] = sanitizeHtml(req.body[key] || "", {
+      allowedTags: [],
+      allowedAttributes: {},
+    });
+  }
 
   next();
 };
