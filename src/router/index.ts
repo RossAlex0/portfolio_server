@@ -1,14 +1,18 @@
-import express, { Request, Response } from "express";
-import { emailLimiter, verifyEmail, verifyToken } from "../middleware";
+import express from "express";
+import {
+  emailLimiter,
+  sanitizeBody,
+  verifyEmail,
+  verifyToken,
+} from "../middleware";
 import { buildAndSendEmail } from "../controller/mail";
-import { parseExcel } from "../controller/excel";
 
 const router = express.Router();
 
-router.get("/wine-prices", emailLimiter, verifyToken, parseExcel);
 router.post(
   "/new-send-email",
   emailLimiter,
+  sanitizeBody,
   verifyToken,
   verifyEmail,
   buildAndSendEmail
