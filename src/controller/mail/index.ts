@@ -2,7 +2,10 @@ import { Request, Response } from "express";
 import nodemailer from "nodemailer";
 import { EmailInfo, Origin } from "../../types";
 
-export const buildAndSendEmail = async (req: Request, res: Response) => {
+export const buildAndSendEmail = async (
+  req: Request & { origin?: string },
+  res: Response
+) => {
   const {
     EMAIL_USER,
     EMAIL_PASSWORD,
@@ -12,16 +15,15 @@ export const buildAndSendEmail = async (req: Request, res: Response) => {
 
   const { name, email, subject, message } = req.body as EmailInfo;
 
-  const _subject =
-    (req as any).origin === Origin.SW2
-      ? "Site web - Cercle des vignerons"
-      : `From portfolio - Nouveau message de ${name} : ${email}`;
+  const isSW2Origin = req.origin === Origin.SW2;
 
-  const user =
-    (req as any).origin === Origin.SW2 ? EMAIL_USER_CLIENT : EMAIL_USER;
+  const customSubject = isSW2Origin
+    ? "Site web - Cercle des vignerons"
+    : `From portfolio - Nouveau message de ${name} : ${email}`;
 
-  const pass =
-    (req as any).origin === Origin.SW2 ? EMAIL_PASSWORD_CLIENT : EMAIL_PASSWORD;
+  const user = isSW2Origin ? EMAIL_USER_CLIENT : EMAIL_USER;
+
+  const pass = isSW2Origin ? EMAIL_PASSWORD_CLIENT : EMAIL_PASSWORD;
 
   const transporter = nodemailer.createTransport({
     service: "Gmail",
@@ -34,7 +36,7 @@ export const buildAndSendEmail = async (req: Request, res: Response) => {
   const mailOptions = {
     from: `WebSite <${user}>`,
     to: user,
-    subject: _subject,
+    subject: customSubject,
     text: `           
        Nom: ${name}    ||    Email: ${email}
 

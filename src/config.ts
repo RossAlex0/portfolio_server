@@ -11,13 +11,10 @@ app.use(
     origin: [
       "https://www.cerclevignerons.com",
       "https://www.alex-rossignol.fr",
-      "http://localhost:3000",
     ],
-    credentials: true,
+    methods: ["POST"],
   })
 );
-
-app.options("*", cors());
 
 app.use("/api", router);
 
