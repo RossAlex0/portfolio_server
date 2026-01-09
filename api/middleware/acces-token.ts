@@ -1,20 +1,11 @@
 import { Request, Response, NextFunction } from "express";
 import { Origin } from "../types";
-import { getEnv } from "../utils/getEnv";
 
 export const accesToken = (
   req: Request & { origin?: string },
   res: Response,
   next: NextFunction
 ) => {
-  if (req.query?.secret) {
-    const secretKey = getEnv("SECRET_CRON_KEY");
-
-    if (req.query.secret === secretKey) {
-      return next();
-    }
-  }
-
   const token = req.headers["x-api-key"];
 
   if (!token) {

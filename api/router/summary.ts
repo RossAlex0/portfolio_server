@@ -1,9 +1,9 @@
 import express from "express";
 import { sendWeeklySummary } from "../controller/summary";
-import { accesToken } from "../middleware/acces-token";
+import { accesCron } from "../middleware/acces-cron";
 
 const router = express.Router();
 
-router.get("/", accesToken, sendWeeklySummary);
+router.get("/", accesCron, sendWeeklySummary);
 
 export default router;
