@@ -14,7 +14,7 @@
   ],
   "crons": [
     {
-      "path": "/api/summary?secret=SECRET_CRON_KEY",
+      "path": "/api/summary",
       "schedule": "0 18 * * 0"
     }
   ]
