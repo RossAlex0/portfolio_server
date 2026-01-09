@@ -2,14 +2,20 @@
   "version": 2,
   "builds": [
     {
-      "src": "src/index.ts",
+      "src": "api/app.ts",
       "use": "@vercel/node"
     }
   ],
   "routes": [
     {
       "src": "/(.*)",
-      "dest": "src/index.ts"
+      "dest": "api/app.ts"
+    }
+  ],
+  "crons": [
+    {
+      "path": "/api/summary",
+      "schedule": "0 18 * * 0"
     }
   ]
 }

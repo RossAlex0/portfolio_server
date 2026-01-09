@@ -2,10 +2,11 @@
   "name": "postofoli-server",
   "version": "1.1.0",
   "description": "Private server",
-  "main": "dist/index.js",
+  "main": "dist/app.js",
   "scripts": {
-    "start": "node dist/index.js",
-    "build": "tsc"
+    "start": "tsc && node dist/app.js",
+    "build": "tsc",
+    "dev": "nodemon --watch 'api/**/*.ts' --exec 'ts-node' api/app.ts"
   },
   "author": "Rossignol Alex",
   "license": "ISC",
@@ -26,6 +27,8 @@
     "@types/node": "^24.0.3",
     "@types/nodemailer": "^6.4.17",
     "@types/sanitize-html": "^2.16.0",
+    "nodemon": "^3.1.11",
+    "ts-node": "^10.9.2",
     "typescript": "^5.8.3"
   }
 }

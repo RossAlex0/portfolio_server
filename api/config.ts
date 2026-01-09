@@ -11,6 +11,8 @@ app.use(
     origin: [
       "https://www.cerclevignerons.com",
       "https://www.alex-rossignol.fr",
+      "https://cerclevignerons.com",
+      "https://alex-rossignol.fr",
     ],
     methods: ["POST"],
   })
