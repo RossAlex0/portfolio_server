@@ -18,12 +18,12 @@ export const sendWeeklySummary = async (_req: Request, res: Response) => {
   const textHtmlBodyPf = generateWeeklySummaryHTML(
     analyticsPf.perDay,
     analyticsPf.total,
-    "https://alex-rossignol.fr"
+    "https://alex-rossignol.fr",
   );
   const textHtmlBodyCv = generateWeeklySummaryHTML(
     analyticsCv.perDay,
     analyticsCv.total,
-    "https://cerclevignerons.com"
+    "https://cerclevignerons.com",
   );
 
   await transporter.sendMail({
@@ -35,7 +35,7 @@ export const sendWeeklySummary = async (_req: Request, res: Response) => {
   await transporterClient.sendMail({
     to: userClient,
     subject: "Résumé hebdomadaire des visites de votre site web",
-    text: textHtmlBodyCv,
+    html: textHtmlBodyCv,
   });
   console.log("Weekly summary emails sent.");
   res.json({ message: "Emails de résumé hebdomadaire envoyés." });
