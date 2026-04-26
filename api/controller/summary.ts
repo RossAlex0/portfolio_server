@@ -37,6 +37,6 @@ export const sendWeeklySummary = async (_req: Request, res: Response) => {
     subject: "Résumé hebdomadaire des visites de votre site web",
     html: textHtmlBodyCv,
   });
-  console.log("Weekly summary emails sent.");
+
   res.json({ message: "Emails de résumé hebdomadaire envoyés." });
 };
