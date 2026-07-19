@@ -30,7 +30,7 @@ export const getVercelAnalytics = async (origin: Origin.SW1 | Origin.SW2) => {
   const data = JSON.parse(raw);
 
   const dataFormated = summarizeAnalytics(
-    data?.data?.groups?.all as AnalyticsItem[]
+    (data?.data ?? []) as AnalyticsItem[]
   );
 
   return dataFormated;
@@ -41,19 +41,23 @@ const buildVercelUrl = (origin: Origin.SW1 | Origin.SW2) => {
   const sevenDaysAgo = new Date(now);
   sevenDaysAgo.setDate(now.getDate() - 7);
 
-  const url = new URL("https://vercel.com/api/web-analytics/timeseries");
+  const url = new URL(
+    "https://api.vercel.com/v1/query/web-analytics/visits/aggregate"
+  );
 
   const project =
     origin === Origin.SW2 ? "cercle-des-vignerons" : "portfolio-v2";
 
-  url.searchParams.set("from", sevenDaysAgo.toISOString());
-  url.searchParams.set("to", now.toISOString());
+  url.searchParams.set("since", toDateParam(sevenDaysAgo));
+  url.searchParams.set("until", toDateParam(now));
+  url.searchParams.set("by", "day");
   url.searchParams.set("projectId", project);
-  url.searchParams.set("teamId", "rossalex0s-projects");
-  url.searchParams.set("tz", "Europe/Paris");
+  url.searchParams.set("slug", "rossalex0s-projects");
 
   return url;
 };
+
+const toDateParam = (date: Date) => date.toISOString().split("T")[0];
 
 const summarizeAnalytics = (data: AnalyticsItem[]) => {
   const perDay: Record<string, number> = {};
@@ -66,11 +70,11 @@ const summarizeAnalytics = (data: AnalyticsItem[]) => {
   });
 
   for (const item of data) {
-    const date = new Date(item.key);
+    const date = new Date(item.timestamp);
     const dayLabel = formatter.format(date);
 
-    perDay[dayLabel] = (perDay[dayLabel] || 0) + item.devices;
-    total += item.devices;
+    perDay[dayLabel] = (perDay[dayLabel] || 0) + item.pageviews;
+    total += item.pageviews;
   }
 
   return { perDay, total };
