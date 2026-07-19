@@ -1,5 +1,5 @@
 import dotenv from "dotenv";
-import app from "./config";
+import app from "../src/config";
 
 dotenv.config();
 
@@ -10,5 +10,5 @@ if (process.env.NODE_ENV === "development") {
     console.info(`Server is listenning to http://localhost:${PORT}`);
   });
 }
-
+// Test
 export default app;
