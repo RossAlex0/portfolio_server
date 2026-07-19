@@ -13,10 +13,24 @@ export const getVercelAnalytics = async (origin: Origin.SW1 | Origin.SW2) => {
     },
   });
 
-  const data = await res.json();
+  const raw = await res.text();
+
+  if (!res.ok) {
+    throw new Error(
+      `Vercel Analytics API error (${res.status} ${res.statusText}) for ${origin}: ${raw || "empty response body"}`
+    );
+  }
+
+  if (!raw) {
+    throw new Error(
+      `Vercel Analytics API returned an empty response body for ${origin}`
+    );
+  }
+
+  const data = JSON.parse(raw);
 
   const dataFormated = summarizeAnalytics(
-    data.data.groups.all as AnalyticsItem[]
+    data?.data?.groups?.all as AnalyticsItem[]
   );
 
   return dataFormated;
