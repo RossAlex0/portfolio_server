@@ -6,10 +6,9 @@ export type EmailInfo = {
 };
 
 export type AnalyticsItem = {
-  key: string;
-  total: number;
-  devices: number;
-  bounceRate: number;
+  timestamp: string;
+  pageviews: number;
+  visitors: number;
 };
 
 export enum Origin {
