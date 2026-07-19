@@ -9,6 +9,6 @@
     "moduleResolution": "node",
     "resolveJsonModule": true
   },
-  "include": ["api"],
+  "include": ["api", "src"],
   "exclude": ["node_modules"]
 }

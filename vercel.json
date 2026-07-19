@@ -1,26 +1,15 @@
 {
-  "version": 2,
-  "builds": [
-    {
-      "src": "api/app.ts",
-      "use": "@vercel/node"
+  "framework": null,
+  "rewrites": [{ "source": "/(.*)", "destination": "/api/app" }],
+  "functions": {
+    "api/app.ts": {
+      "maxDuration": 60
     }
-  ],
-  "routes": [
-    {
-      "src": "/(.*)",
-      "dest": "api/app.ts"
-    }
-  ],
+  },
   "crons": [
     {
       "path": "/api/summary",
       "schedule": "0 18 * * 0"
     }
-  ],
-  "functions": {
-    "api/router/summary.js": {
-      "maxDuration": 60
-    }
-  }
+  ]
 }
